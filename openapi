@@ -1,0 +1,223 @@
+openapi: 3.1.0
+info:
+  title: DAO Platform API (2025 Edition)
+  version: 1.0.0
+servers:
+  - url: https://api.daouniverse.com/v1
+paths:
+  /daos:
+    post:
+      summary: Create a new DAO, with advanced options
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name: { type: string }
+                logo_url: { type: string }
+                description: { type: string }
+                creator_wallet: { type: string }
+                privacy_mode: { type: boolean }
+                federation_parent: { type: string, nullable: true }
+      responses:
+        "201":
+          description: DAO created
+    get:
+      summary: List all DAOs (with filters)
+      parameters:
+        - name: privacy
+          in: query
+          schema: { type: string }
+        - name: federation
+          in: query
+          schema: { type: string }
+      responses:
+        "200":
+          description: List of DAOs
+
+  /daos/{daoId}/members:
+    post:
+      summary: Add member (wallet, SSO, or ZK proof)
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                identity: { type: string }
+                role: { type: string }
+                zk_proof: { type: string, nullable: true }
+      responses:
+        "200":
+          description: Member added
+    get:
+      summary: List members (with roles, badges, privacy status)
+      responses:
+        "200":
+          description: Member list
+
+  /daos/{daoId}/proposals:
+    post:
+      summary: Create a proposal (AI analysis, on/off-chain)
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title: { type: string }
+                content: { type: string }
+                attachments: { type: array, items: { type: string } }
+                on_chain: { type: boolean }
+                ai_analysis: { type: boolean }
+      responses:
+        "201":
+          description: Proposal created
+    get:
+      summary: List proposals (filter by status, impact, AI flag)
+      responses:
+        "200":
+          description: List of proposals
+
+  /daos/{daoId}/votes:
+    post:
+      summary: Cast a vote (on-chain/off-chain, privacy/encryption)
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                proposal_id: { type: string }
+                voter: { type: string }
+                support: { type: boolean }
+                encrypted_vote: { type: string, nullable: true }
+      responses:
+        "200":
+          description: Vote cast
+
+  /daos/{daoId}/treasury:
+    get:
+      summary: Get treasury, with multi-safe, NFT, and audit log
+      responses:
+        "200":
+          description: Treasury info
+    post:
+      summary: Allocate funds (with multi-sig and time-lock)
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                recipient: { type: string }
+                amount: { type: number }
+                asset: { type: string }
+                time_lock: { type: string, nullable: true }
+      responses:
+        "201":
+          description: Allocation proposal created
+
+  /daos/{daoId}/bounties:
+    get:
+      summary: List bounties (federated filter)
+      responses:
+        "200":
+          description: List of bounties
+    post:
+      summary: Create a new bounty (AI scoring, cross-DAO)
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title: { type: string }
+                reward: { type: number }
+                subdao: { type: string, nullable: true }
+                ai_score: { type: number, nullable: true }
+      responses:
+        "201":
+          description: Bounty created
+
+  /daos/{daoId}/collaboration:
+    get:
+      summary: List collaborators, PRs, and test results
+      responses:
+        "200":
+          description: Collaboration data
+    post:
+      summary: Add collaborator, assign permissions
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                user: { type: string }
+                permission: { type: string }
+      responses:
+        "201":
+          description: Collaborator added
+
+  /daos/{daoId}/testing:
+    post:
+      summary: Trigger automated, fuzz, and ZK tests
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                type: { type: string, enum: [unit, integration, fuzz, privacy] }
+      responses:
+        "200":
+          description: Test results
+    get:
+      summary: Get latest test, fuzz, and coverage reports
+      responses:
+        "200":
+          description: Test summaries
+
+  /daos/{daoId}/security/audit:
+    post:
+      summary: Trigger audit (smart contract, off-chain, continuous)
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                audit_type: { type: string, enum: [static, dynamic, zk, continuous] }
+      responses:
+        "200":
+          description: Audit results
+    get:
+      summary: Get last audit report, status, and recommendations
+      responses:
+        "200":
+          description: Audit report
+
+  /analytics:
+    get:
+      summary: Platform-wide analytics, trends, and export
+      responses:
+        "200":
+          description: Analytics data
+
+  /docs:
+    get:
+      summary: Platform docs (API, guides, compliance)
+      responses:
+        "200":
+          description: Documentation info
+
+  /federation:
+    get:
+      summary: Browse federated DAOs, cross-DAO voting/bounties
+      responses:
+        "200":
+          description: Federation info
+
+components: {}
