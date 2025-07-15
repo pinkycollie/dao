@@ -3,7 +3,7 @@ info:
   title: DAO Platform API (2025 Edition)
   version: 1.0.0
 servers:
-  - url: https://api.daouniverse.com/v1
+  - url: https://dao.mbtquniverse.com/v1/api
 paths:
   /daos:
     post:
