@@ -51,9 +51,5 @@
 - Start with easy, off-chain database-driven features, then layer in web3 integrations.
 - Focus on clean UI, ease of onboarding, and modularity for demo purposes.
 
----
 
-**Next Steps:**  
-1. Pick 1–2 ideas to prototype for your presentation.
-2. Sketch user flows and wireframes (I can help!).
-3. Implement core features, then polish with analytics and engagement tools.
+
