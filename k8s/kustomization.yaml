@@ -1,0 +1,50 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namespace: dao-platform
+
+resources:
+  - base/namespace.yaml
+  - base/configmap.yaml
+  - base/secrets.yaml
+  - base/deployment.yaml
+  - base/service.yaml
+  - base/ingress.yaml
+  - base/hpa.yaml
+  - monitoring/prometheus-config.yaml
+  - monitoring/prometheus-deployment.yaml
+  - monitoring/grafana-deployment.yaml
+  - tenants/vr4deaf-configmap.yaml
+
+# Common labels applied to all resources
+commonLabels:
+  app.kubernetes.io/name: dao-platform
+  app.kubernetes.io/version: "1.0.0"
+  app.kubernetes.io/managed-by: kustomize
+
+# ConfigMap generator (optional - for generating ConfigMaps from files)
+# configMapGenerator:
+#   - name: dao-platform-config
+#     files:
+#       - config/app.properties
+
+# Secret generator (optional - for generating Secrets from files)
+# secretGenerator:
+#   - name: dao-platform-secrets
+#     envs:
+#       - secrets/.env.production
+
+# Images (configure image repository and tags)
+images:
+  - name: dao-platform
+    newName: your-registry/dao-platform
+    newTag: latest
+
+# Replicas (override replica counts)
+# replicas:
+#   - name: dao-platform
+#     count: 5
+
+# Patches for environment-specific customizations
+# patchesStrategicMerge:
+#   - overlays/production-patch.yaml

@@ -1,0 +1,86 @@
+# Tenant Configuration Template
+# Copy this file and customize for each new tenant
+
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: tenant-TENANT_ID-config
+  namespace: dao-platform
+  labels:
+    app: dao-platform
+    tenant: TENANT_ID
+    tenant-type: TYPE  # e.g., vocational-rehabilitation, startup, agency
+data:
+  # Tenant identification
+  TENANT_ID: "TENANT_ID"
+  TENANT_NAME: "Full Tenant Name"
+  TENANT_SLUG: "tenant-slug"
+  
+  # Domain configuration
+  TENANT_DOMAIN: "example.com"
+  TENANT_SUBDOMAIN: "subdomain"
+  
+  # Feature flags (customize per tenant)
+  ENABLE_VIDEO_SUPPORT: "false"
+  ENABLE_CAPTIONS: "false"
+  ENABLE_SIGN_LANGUAGE: "false"
+  ENABLE_ACCESSIBILITY_TOOLS: "false"
+  
+  # Business-specific features
+  ENABLE_PROPOSALS: "true"
+  ENABLE_VOTING: "true"
+  ENABLE_TREASURY: "true"
+  ENABLE_MEMBERS: "true"
+  
+  # UI/UX Configuration
+  PRIMARY_COLOR: "#007bff"
+  ACCENT_COLOR: "#28a745"
+  THEME: "default"
+  FONT_SIZE: "medium"
+  CONTRAST_MODE: "normal"
+  
+  # Accessibility features
+  SCREEN_READER_SUPPORT: "true"
+  KEYBOARD_NAVIGATION: "standard"
+  TEXT_TO_SPEECH: "disabled"
+  
+  # Compliance and privacy
+  ADA_COMPLIANCE: "false"
+  WCAG_LEVEL: "AA"
+  HIPAA_MODE: "false"
+  GDPR_MODE: "false"
+  
+  # Notifications
+  EMAIL_NOTIFICATIONS: "true"
+  SMS_NOTIFICATIONS: "false"
+  
+  # Support
+  SUPPORT_EMAIL: "support@example.com"
+  SUPPORT_PHONE: ""
+---
+# Tenant Secret Template
+apiVersion: v1
+kind: Secret
+metadata:
+  name: tenant-TENANT_ID-secrets
+  namespace: dao-platform
+  labels:
+    app: dao-platform
+    tenant: TENANT_ID
+type: Opaque
+stringData:
+  # Database (if tenant has isolated DB)
+  TENANT_DB_URL: "postgresql://user:password@postgres:5432/tenant_db"
+  
+  # API Keys (tenant-specific)
+  TENANT_API_KEY: "your-api-key"
+  TENANT_WEBHOOK_SECRET: "your-webhook-secret"
+  
+  # Third-party integrations
+  STRIPE_API_KEY: ""
+  SENDGRID_API_KEY: ""
+  TWILIO_API_KEY: ""
+  
+  # OAuth credentials (if tenant-specific)
+  OAUTH_CLIENT_ID: ""
+  OAUTH_CLIENT_SECRET: ""

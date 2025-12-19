@@ -1,0 +1,66 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: tenant-vr4deaf-config
+  namespace: dao-platform
+  labels:
+    app: dao-platform
+    tenant: vr4deaf
+    tenant-type: vocational-rehabilitation
+data:
+  # Tenant identification
+  TENANT_ID: "vr4deaf"
+  TENANT_NAME: "VR4Deaf - Vocational Rehabilitation for Deaf Community"
+  TENANT_SLUG: "vr4deaf"
+  
+  # Domain configuration
+  TENANT_DOMAIN: "vr4deaf.org"
+  TENANT_SUBDOMAIN: "vr4deaf"
+  
+  # Tenant-specific features
+  ENABLE_VIDEO_SUPPORT: "true"
+  ENABLE_CAPTIONS: "true"
+  ENABLE_SIGN_LANGUAGE: "true"
+  ENABLE_ACCESSIBILITY_TOOLS: "true"
+  
+  # Vocational rehabilitation specific features
+  ENABLE_JOB_MATCHING: "true"
+  ENABLE_SKILL_ASSESSMENT: "true"
+  ENABLE_TRAINING_PROGRAMS: "true"
+  ENABLE_EMPLOYER_PORTAL: "true"
+  
+  # UI/UX Configuration
+  PRIMARY_COLOR: "#0066cc"
+  ACCENT_COLOR: "#ff6b00"
+  THEME: "accessible"
+  FONT_SIZE: "large"
+  CONTRAST_MODE: "high"
+  
+  # Accessibility features
+  SCREEN_READER_SUPPORT: "true"
+  KEYBOARD_NAVIGATION: "enhanced"
+  TEXT_TO_SPEECH: "enabled"
+  
+  # Communication preferences
+  DEFAULT_VIDEO_PROVIDER: "zoom"
+  CAPTION_PROVIDER: "automated"
+  SIGN_LANGUAGE_INTERPRETER_BOOKING: "enabled"
+  
+  # Compliance and privacy
+  ADA_COMPLIANCE: "true"
+  WCAG_LEVEL: "AAA"
+  HIPAA_MODE: "false"
+  
+  # Integration endpoints (tenant-specific)
+  VOCATIONAL_REHAB_API: "https://api.vr4deaf.org/v1"
+  JOB_BOARD_API: "https://jobs.vr4deaf.org/api"
+  
+  # Notifications
+  EMAIL_NOTIFICATIONS: "true"
+  SMS_NOTIFICATIONS: "true"
+  VIDEO_NOTIFICATIONS: "true"
+  
+  # Support
+  SUPPORT_EMAIL: "support@vr4deaf.org"
+  SUPPORT_PHONE: "1-800-VR4DEAF"
+  SUPPORT_VIDEO_RELAY: "enabled"
