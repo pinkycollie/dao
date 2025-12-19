@@ -3,6 +3,13 @@ import { NextRequest, NextResponse } from 'next/server';
 /**
  * Prometheus metrics endpoint
  * Exposes application metrics in Prometheus format
+ * 
+ * NOTE: This is a basic implementation with mock/example metrics.
+ * In production, you should:
+ * 1. Use a proper metrics library like 'prom-client'
+ * 2. Track actual application metrics (real request counts, errors, etc.)
+ * 3. Instrument your code to collect meaningful metrics
+ * 4. Consider using OpenTelemetry for comprehensive observability
  */
 export async function GET(req: NextRequest) {
   try {
@@ -13,10 +20,12 @@ export async function GET(req: NextRequest) {
       '',
       '# HELP dao_http_requests_total Total number of HTTP requests',
       '# TYPE dao_http_requests_total counter',
+      // TODO: Replace with actual request counter from instrumentation
       `dao_http_requests_total{method="GET",status="200"} ${Math.floor(Math.random() * 1000)}`,
       '',
       '# HELP dao_active_tenants Number of active tenants',
       '# TYPE dao_active_tenants gauge',
+      // TODO: Query actual tenant count from database
       `dao_active_tenants ${Math.floor(Math.random() * 50) + 1}`,
       '',
       '# HELP nodejs_memory_usage_bytes Node.js memory usage in bytes',

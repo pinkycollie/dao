@@ -27,8 +27,9 @@ metadata:
     nginx.ingress.kubernetes.io/cors-allow-methods: "GET, POST, PUT, DELETE, OPTIONS"
     nginx.ingress.kubernetes.io/cors-allow-credentials: "true"
     
-    # cert-manager for TLS (optional, requires cert-manager)
-    cert-manager.io/cluster-issuer: "letsencrypt-prod"
+    # cert-manager for TLS (optional, requires cert-manager to be installed)
+    # Uncomment and configure if using cert-manager:
+    # cert-manager.io/cluster-issuer: "letsencrypt-prod"
 spec:
   ingressClassName: nginx
   tls:

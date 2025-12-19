@@ -1,4 +1,17 @@
 apiVersion: v1
+kind: Secret
+metadata:
+  name: grafana-admin-secret
+  namespace: dao-platform
+  labels:
+    app: grafana
+type: Opaque
+stringData:
+  # IMPORTANT: Change this password before deploying to production!
+  # Generate a secure password: openssl rand -base64 32
+  password: "CHANGE-ME-IN-PRODUCTION"
+---
+apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: grafana-storage
@@ -53,7 +66,11 @@ spec:
         - name: GF_SECURITY_ADMIN_USER
           value: "admin"
         - name: GF_SECURITY_ADMIN_PASSWORD
-          value: "admin123"  # Change this in production!
+          valueFrom:
+            secretKeyRef:
+              name: grafana-admin-secret
+              key: password
+              optional: false
         - name: GF_USERS_ALLOW_SIGN_UP
           value: "false"
         - name: GF_SERVER_ROOT_URL

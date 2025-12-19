@@ -83,7 +83,9 @@ spec:
         - --kubelet-preferred-address-types=InternalIP,ExternalIP,Hostname
         - --kubelet-use-node-status-port
         - --metric-resolution=15s
-        # For development/testing environments with self-signed certificates:
+        # WARNING: The following flag is INSECURE and should ONLY be used in development/testing
+        # environments with self-signed certificates. NEVER use in production!
+        # Uncomment only if needed for local development:
         # - --kubelet-insecure-tls
         ports:
         - name: https
