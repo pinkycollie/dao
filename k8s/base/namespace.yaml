@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: dao-platform
+  labels:
+    name: dao-platform
+    app.kubernetes.io/name: dao-platform
+    app.kubernetes.io/part-of: multi-tenant-dao

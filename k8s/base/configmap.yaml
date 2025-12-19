@@ -1,0 +1,24 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: dao-platform-config
+  namespace: dao-platform
+  labels:
+    app: dao-platform
+data:
+  # Application configuration
+  NODE_ENV: "production"
+  NEXT_PUBLIC_ROOT_DOMAIN: "dao-platform.local"
+  NEXT_TELEMETRY_DISABLED: "1"
+  PORT: "3000"
+  
+  # Multi-tenant configuration
+  TENANT_MODE: "enabled"
+  DEFAULT_TENANT: "main"
+  
+  # Feature flags
+  ENABLE_METRICS: "true"
+  ENABLE_HEALTH_CHECK: "true"
+  
+  # Logging
+  LOG_LEVEL: "info"

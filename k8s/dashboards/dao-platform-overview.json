@@ -1,0 +1,133 @@
+{
+  "dashboard": {
+    "title": "DAO Platform - Application Overview",
+    "uid": "dao-platform-overview",
+    "tags": ["dao", "platform", "overview"],
+    "timezone": "browser",
+    "schemaVersion": 27,
+    "version": 1,
+    "refresh": "30s",
+    "panels": [
+      {
+        "id": 1,
+        "title": "Platform Info",
+        "type": "stat",
+        "targets": [
+          {
+            "expr": "dao_platform_info",
+            "legendFormat": "Platform Version"
+          }
+        ],
+        "gridPos": {"h": 4, "w": 6, "x": 0, "y": 0}
+      },
+      {
+        "id": 2,
+        "title": "Active Tenants",
+        "type": "stat",
+        "targets": [
+          {
+            "expr": "dao_active_tenants",
+            "legendFormat": "Tenants"
+          }
+        ],
+        "gridPos": {"h": 4, "w": 6, "x": 6, "y": 0}
+      },
+      {
+        "id": 3,
+        "title": "Application Uptime",
+        "type": "stat",
+        "targets": [
+          {
+            "expr": "dao_uptime_seconds",
+            "legendFormat": "Uptime (seconds)"
+          }
+        ],
+        "gridPos": {"h": 4, "w": 6, "x": 12, "y": 0}
+      },
+      {
+        "id": 4,
+        "title": "Pod Replicas",
+        "type": "stat",
+        "targets": [
+          {
+            "expr": "count(kube_pod_info{namespace=\"dao-platform\", pod=~\"dao-platform-.*\"})",
+            "legendFormat": "Running Pods"
+          }
+        ],
+        "gridPos": {"h": 4, "w": 6, "x": 18, "y": 0}
+      },
+      {
+        "id": 5,
+        "title": "HTTP Request Rate",
+        "type": "graph",
+        "targets": [
+          {
+            "expr": "rate(dao_http_requests_total[5m])",
+            "legendFormat": "{{method}} - {{status}}"
+          }
+        ],
+        "gridPos": {"h": 8, "w": 12, "x": 0, "y": 4}
+      },
+      {
+        "id": 6,
+        "title": "Memory Usage",
+        "type": "graph",
+        "targets": [
+          {
+            "expr": "nodejs_memory_usage_bytes{type=\"heapUsed\"}",
+            "legendFormat": "Heap Used"
+          },
+          {
+            "expr": "nodejs_memory_usage_bytes{type=\"heapTotal\"}",
+            "legendFormat": "Heap Total"
+          },
+          {
+            "expr": "nodejs_memory_usage_bytes{type=\"rss\"}",
+            "legendFormat": "RSS"
+          }
+        ],
+        "gridPos": {"h": 8, "w": 12, "x": 12, "y": 4}
+      },
+      {
+        "id": 7,
+        "title": "CPU Usage",
+        "type": "graph",
+        "targets": [
+          {
+            "expr": "rate(container_cpu_usage_seconds_total{namespace=\"dao-platform\", pod=~\"dao-platform-.*\"}[5m])",
+            "legendFormat": "{{pod}}"
+          }
+        ],
+        "gridPos": {"h": 8, "w": 12, "x": 0, "y": 12}
+      },
+      {
+        "id": 8,
+        "title": "Pod Memory Usage",
+        "type": "graph",
+        "targets": [
+          {
+            "expr": "container_memory_usage_bytes{namespace=\"dao-platform\", pod=~\"dao-platform-.*\"}",
+            "legendFormat": "{{pod}}"
+          }
+        ],
+        "gridPos": {"h": 8, "w": 12, "x": 12, "y": 12}
+      },
+      {
+        "id": 9,
+        "title": "HPA Status",
+        "type": "graph",
+        "targets": [
+          {
+            "expr": "kube_horizontalpodautoscaler_status_current_replicas{namespace=\"dao-platform\"}",
+            "legendFormat": "Current Replicas"
+          },
+          {
+            "expr": "kube_horizontalpodautoscaler_status_desired_replicas{namespace=\"dao-platform\"}",
+            "legendFormat": "Desired Replicas"
+          }
+        ],
+        "gridPos": {"h": 8, "w": 24, "x": 0, "y": 20}
+      }
+    ]
+  }
+}

@@ -2,6 +2,7 @@
  * @type {import('next').NextConfig}
  */
 module.exports = {
+  output: 'standalone',
   experimental: {
     serverActions: {
       allowedOrigins: ["app.localhost:3000"],

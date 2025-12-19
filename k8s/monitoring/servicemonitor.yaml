@@ -1,0 +1,25 @@
+# ServiceMonitor for Prometheus Operator
+# Note: This requires the Prometheus Operator to be installed
+# If not using Prometheus Operator, metrics are scraped via pod annotations
+
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: dao-platform-metrics
+  namespace: dao-platform
+  labels:
+    app: dao-platform
+    prometheus: kube-prometheus
+spec:
+  selector:
+    matchLabels:
+      app: dao-platform
+  endpoints:
+  - port: http
+    path: /api/metrics
+    interval: 30s
+    scrapeTimeout: 10s
+    scheme: http
+  namespaceSelector:
+    matchNames:
+    - dao-platform

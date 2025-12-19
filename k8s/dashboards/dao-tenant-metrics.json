@@ -1,0 +1,105 @@
+{
+  "dashboard": {
+    "title": "DAO Platform - Tenant Metrics",
+    "uid": "dao-tenant-metrics",
+    "tags": ["dao", "tenants", "multi-tenant"],
+    "timezone": "browser",
+    "schemaVersion": 27,
+    "version": 1,
+    "refresh": "30s",
+    "templating": {
+      "list": [
+        {
+          "name": "tenant",
+          "type": "query",
+          "label": "Tenant",
+          "query": "label_values(dao_http_requests_total, tenant)",
+          "refresh": 1,
+          "multi": false
+        }
+      ]
+    },
+    "panels": [
+      {
+        "id": 1,
+        "title": "Tenant Request Rate",
+        "type": "graph",
+        "targets": [
+          {
+            "expr": "rate(dao_http_requests_total{tenant=\"$tenant\"}[5m])",
+            "legendFormat": "{{method}} - {{status}}"
+          }
+        ],
+        "gridPos": {"h": 8, "w": 12, "x": 0, "y": 0}
+      },
+      {
+        "id": 2,
+        "title": "Tenant Response Times",
+        "type": "graph",
+        "targets": [
+          {
+            "expr": "histogram_quantile(0.95, rate(http_request_duration_seconds_bucket{tenant=\"$tenant\"}[5m]))",
+            "legendFormat": "P95"
+          },
+          {
+            "expr": "histogram_quantile(0.99, rate(http_request_duration_seconds_bucket{tenant=\"$tenant\"}[5m]))",
+            "legendFormat": "P99"
+          }
+        ],
+        "gridPos": {"h": 8, "w": 12, "x": 12, "y": 0}
+      },
+      {
+        "id": 3,
+        "title": "Tenant Active Users",
+        "type": "stat",
+        "targets": [
+          {
+            "expr": "dao_active_users{tenant=\"$tenant\"}",
+            "legendFormat": "Active Users"
+          }
+        ],
+        "gridPos": {"h": 4, "w": 6, "x": 0, "y": 8}
+      },
+      {
+        "id": 4,
+        "title": "Tenant Database Connections",
+        "type": "stat",
+        "targets": [
+          {
+            "expr": "dao_db_connections{tenant=\"$tenant\"}",
+            "legendFormat": "DB Connections"
+          }
+        ],
+        "gridPos": {"h": 4, "w": 6, "x": 6, "y": 8}
+      },
+      {
+        "id": 5,
+        "title": "Tenant Error Rate",
+        "type": "graph",
+        "targets": [
+          {
+            "expr": "rate(dao_http_requests_total{tenant=\"$tenant\", status=~\"5..\"}[5m])",
+            "legendFormat": "5xx Errors"
+          },
+          {
+            "expr": "rate(dao_http_requests_total{tenant=\"$tenant\", status=~\"4..\"}[5m])",
+            "legendFormat": "4xx Errors"
+          }
+        ],
+        "gridPos": {"h": 8, "w": 12, "x": 0, "y": 12}
+      },
+      {
+        "id": 6,
+        "title": "Tenant Resource Usage",
+        "type": "graph",
+        "targets": [
+          {
+            "expr": "sum(rate(container_cpu_usage_seconds_total{namespace=\"dao-platform\", tenant=\"$tenant\"}[5m]))",
+            "legendFormat": "CPU Usage"
+          }
+        ],
+        "gridPos": {"h": 8, "w": 12, "x": 12, "y": 12}
+      }
+    ]
+  }
+}
