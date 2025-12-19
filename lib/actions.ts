@@ -46,14 +46,14 @@ export const createSite = async (formData: FormData) => {
       `${subdomain}.${process.env.NEXT_PUBLIC_ROOT_DOMAIN}-metadata`,
     );
     return response;
-  } catch (error: any) {
-    if (error.code === "P2002") {
+  } catch (error: unknown) {
+    if (error instanceof Error && (error as { code?: string }).code === "P2002") {
       return {
         error: `This subdomain is already taken`,
       };
     } else {
       return {
-        error: error.message,
+        error: error instanceof Error ? error.message : "Unknown error",
       };
     }
   }
@@ -174,14 +174,14 @@ export const updateSite = withSiteAuth(
       site.customDomain && revalidateTag(`${site.customDomain}-metadata`);
 
       return response;
-    } catch (error: any) {
-      if (error.code === "P2002") {
+    } catch (error: unknown) {
+      if (error instanceof Error && (error as { code?: string }).code === "P2002") {
         return {
           error: `This ${key} is already taken`,
         };
       } else {
         return {
-          error: error.message,
+          error: error instanceof Error ? error.message : "Unknown error",
         };
       }
     }
@@ -201,9 +201,9 @@ export const deleteSite = withSiteAuth(
       );
       response.customDomain && revalidateTag(`${site.customDomain}-metadata`);
       return response;
-    } catch (error: any) {
+    } catch (error: unknown) {
       return {
-        error: error.message,
+        error: error instanceof Error ? error.message : "Unknown error",
       };
     }
   },
@@ -292,9 +292,9 @@ export const updatePost = async (data: SelectPost) => {
       revalidateTag(`${post.site?.customDomain}-${post.slug}`));
 
     return response;
-  } catch (error: any) {
+  } catch (error: unknown) {
     return {
-      error: error.message,
+      error: error instanceof Error ? error.message : "Unknown error",
     };
   }
 };
@@ -353,14 +353,14 @@ export const updatePostMetadata = withPostAuth(
         revalidateTag(`${post.site?.customDomain}-${post.slug}`));
 
       return response;
-    } catch (error: any) {
-      if (error.code === "P2002") {
+    } catch (error: unknown) {
+      if (error instanceof Error && (error as { code?: string }).code === "P2002") {
         return {
           error: `This slug is already in use`,
         };
       } else {
         return {
-          error: error.message,
+          error: error instanceof Error ? error.message : "Unknown error",
         };
       }
     }
@@ -378,9 +378,9 @@ export const deletePost = withPostAuth(
         });
 
       return response;
-    } catch (error: any) {
+    } catch (error: unknown) {
       return {
-        error: error.message,
+        error: error instanceof Error ? error.message : "Unknown error",
       };
     }
   },
@@ -409,14 +409,14 @@ export const editUser = async (
       .returning();
 
     return response;
-  } catch (error: any) {
-    if (error.code === "P2002") {
+  } catch (error: unknown) {
+    if (error instanceof Error && (error as { code?: string }).code === "P2002") {
       return {
         error: `This ${key} is already in use`,
       };
     } else {
       return {
-        error: error.message,
+        error: error instanceof Error ? error.message : "Unknown error",
       };
     }
   }

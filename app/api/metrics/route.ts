@@ -49,7 +49,7 @@ export async function GET(req: NextRequest) {
         'Content-Type': 'text/plain; version=0.0.4',
       },
     });
-  } catch (error) {
+  } catch (_error) {
     return NextResponse.json(
       { error: 'Failed to generate metrics' },
       { status: 500 }
