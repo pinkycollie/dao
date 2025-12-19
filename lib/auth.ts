@@ -59,9 +59,9 @@ export const authOptions: NextAuthOptions = {
     session: async ({ session, token }) => {
       session.user = {
         ...session.user,
-        // @ts-expect-error
+        // @ts-expect-error: token.sub is defined by NextAuth but not in the default type
         id: token.sub,
-        // @ts-expect-error
+        // @ts-expect-error: user object on token is extended with custom properties
         username: token?.user?.username || token?.user?.gh_username,
       };
       return session;
